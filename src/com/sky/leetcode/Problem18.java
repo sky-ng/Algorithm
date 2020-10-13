@@ -10,27 +10,28 @@ public class Problem18 {
     	if (nums == null || nums.length < 4) return ans;
     	Arrays.sort(nums);
     	int n = nums.length;
-    	for (int idx2 = 1; idx2 < n - 2; ++idx2) {
-    		for (int idx3 = idx2 + 1; idx3 < n - 1; ++idx3) {
-    			int idx1 = 0;
-    			int idx4 = n - 1;
-    			while (idx1 < idx2 && idx3 < idx4) {
-    				int sum = nums[idx1] + nums[idx2] + nums[idx3] + nums[idx4];
-    				if (sum == target) {
+    	for (int i = 0; i < n - 3; ++i) {
+    		if (i > 0 && nums[i] == nums[i - 1]) continue;
+    		for (int j = i + 1; j < n - 2; ++j) {
+    			if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+    			int L = j + 1, R = n - 1;
+    			while (L < R) {
+    				int sum = nums[i] + nums[j] + nums[L] + nums[R];
+    				if (target == sum) {
     					List<Integer> list = new ArrayList<>();
-    					list.add(nums[idx1]);
-    					list.add(nums[idx2]);
-    					list.add(nums[idx3]);
-    					list.add(nums[idx4]);
-    					if (ans.contains(list)) {
-    						ans.add(list);
-    					}
-    					++idx1;
-    					--idx4;
-    				} else if (sum < target) {
-    					++idx1;
+    					list.add(nums[i]);
+    					list.add(nums[j]);
+    					list.add(nums[L]);
+    					list.add(nums[R]);
+    					ans.add(list);
+    					while (L < R && nums[L] == nums[L + 1]) ++L;
+    					while (L < R && nums[R] == nums[R - 1]) --R;
+    					++L;
+    					--R;
+    				} else if (target < sum) {
+    					--R;
     				} else {
-    					--idx4;
+    					++L;
     				}
     			}
     		}

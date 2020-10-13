@@ -2,17 +2,18 @@ package com.sky.leetcode;
 
 public class Problem75 {
     public void sortColors(int[] nums) {
-    	int p0 = 0, p2 = nums.length - 1, cur = 0;
-    	while (cur <= p2) {
-    		if (nums[cur] == 2) {
-    			swap(nums, cur, p2);
-    			--p2;
-    		} else if (nums[cur] == 0) {
-    			swap(nums, cur, p0);
+    	int n = nums.length;
+    	int p0 = 0, p1 = 0, p2 = n - 1;
+    	while (p1 <= p2) {
+    		if (nums[p1] == 0) {
+    			swap(nums, p0, p1);
     			++p0;
-    			++cur;
+    			++p1;
+    		} else if (nums[p1] == 1) {
+    			++p1;
     		} else {
-    			++cur;
+    			swap(nums, p1, p2);
+    			--p2;
     		}
     	}
     }

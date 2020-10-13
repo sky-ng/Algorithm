@@ -3,13 +3,12 @@ package com.sky.leetcode;
 public class Problem141 {
     public boolean hasCycle(ListNode head) {
     	if (head == null) return false;
-    	ListNode slow = head, fast = head.next;
-    	while (slow != null && fast != null && fast.next != null) {
-    		if (slow == fast) {
+    	ListNode fast = head, slow = head;
+    	while (fast.next != null && fast.next.next != null) {
+    		fast = fast.next.next;
+    		slow = slow.next;
+    		if (fast == slow) {
     			return true;
-    		} else {
-    			slow = slow.next;
-    			fast = fast.next.next;
     		}
     	}
     	return false;
