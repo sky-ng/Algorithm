@@ -1,26 +1,29 @@
 package com.sky.leetcode;
 
-import java.util.Stack;
-
 public class Problem234 {
     public boolean isPalindrome(ListNode head) {
-    	if (head == null) {
-    		return true;
+    	if (head == null) return true;
+    	ListNode blankNode = new ListNode(0);
+    	blankNode.next = head;
+    	ListNode slow = blankNode, fast = blankNode;
+    	while (fast != null && fast.next != null) {
+    		fast = fast.next.next;
+    		slow = slow.next;
     	}
-    	Stack<Integer> stack = new Stack<>();
-    	ListNode current = head;
-    	while (current != null) {
-    		stack.push(current.val);
-    		current = current.next;
+    	ListNode pre = slow, post = slow.next;
+    	while (post != null) {
+    		slow = post;
+    		post = slow.next;
+    		slow.next = pre;
+    		pre = slow;
     	}
-    	int cnt = stack.size() / 2;
-    	while (cnt > 0) {
-    		cnt--;
-    		if (stack.pop() != head.val) {
-    			return false;
-    		}
-    		head = head.next;
-    	}
+    	fast = head;
+    	do {
+    		if (fast.val != slow.val) return false;
+            if (slow.next == fast) break;
+    		fast = fast.next;
+    		slow = slow.next;
+    	} while (slow != fast);
     	return true;
     }
 }
